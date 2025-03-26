@@ -1,0 +1,53 @@
+<div class="home-container">
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Welcome to Snacked</h1>
+      <p class="subtitle">Discover and share your favorite snacks</p>
+      <div class="cta-buttons">
+        <button mat-raised-button color="primary" routerLink="/snacks">
+          <mat-icon>restaurant_menu</mat-icon>
+          Explore Snacks
+        </button>
+        <button mat-raised-button color="accent" routerLink="/reviews/create">
+          <mat-icon>rate_review</mat-icon>
+          Write a Review
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="feature-card">
+      <mat-icon>search</mat-icon>
+      <h3>Discover</h3>
+      <p>Find new and exciting snacks</p>
+    </div>
+    <div class="feature-card">
+      <mat-icon>star</mat-icon>
+      <h3>Rate & Review</h3>
+      <p>Share your faves with other foodies</p>
+    </div>
+    <div class="feature-card">
+      <mat-icon>place</mat-icon>
+      <h3>Locate</h3>
+      <p>Easily locate hidden gems</p>
+    </div>
+  </section>
+
+  <section class="trending">
+    <h2>Trending Snacks</h2>
+    <div class="snack-grid">
+      <mat-card class="snack-card" *ngFor="let i of [1,2,3,4]">
+        <img mat-card-image src="assets/placeholder-snack.jpg" alt="Snack">
+        <mat-card-content>
+          <h3>Popular Snack {{i}}</h3>
+          <div class="rating">
+            <mat-icon class="star">star</mat-icon>
+            <span>4.{{i}}</span>
+            <span class="reviews">({{i}}00+ reviews)</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </section>
+</div> 
