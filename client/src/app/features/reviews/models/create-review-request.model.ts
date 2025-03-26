@@ -3,5 +3,6 @@ export interface CreateReviewRequest {
   rating: number;
   comment: string;
   locationName: string;
+  price: number;
   isPublic: boolean;
 } 

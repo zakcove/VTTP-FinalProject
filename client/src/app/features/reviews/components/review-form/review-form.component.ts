@@ -47,8 +47,7 @@ export class ReviewFormComponent implements OnInit {
   imagePreview: string | null = null;
   loading$ = this.store.select(selectReviewLoading);
   error$ = this.store.select(selectReviewError);
-  
-  // Map configuration
+
   center: google.maps.LatLngLiteral = { lat: 1.3521, lng: 103.8198 }; // Singapore
   zoom = 11;
   markerPosition: google.maps.LatLngLiteral | undefined;
@@ -79,7 +78,6 @@ export class ReviewFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Check if Google Maps is loaded
     if (typeof google === 'undefined') {
       this.snackBar.open('Google Maps failed to load. Please try again later.', 'Close', {
         duration: 5000,
@@ -91,7 +89,6 @@ export class ReviewFormComponent implements OnInit {
 
     this.isMapLoaded = true;
 
-    // Get current location
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -181,6 +178,7 @@ export class ReviewFormComponent implements OnInit {
         rating: Number(this.reviewForm.get('rating')?.value) || 0,
         comment: this.reviewForm.get('comment')?.value || '',
         locationName: this.reviewForm.get('locationName')?.value || '',
+        price: Number(this.reviewForm.get('price')?.value) || 0,
         isPublic: this.reviewForm.get('isPublic')?.value ?? true
       };
 
