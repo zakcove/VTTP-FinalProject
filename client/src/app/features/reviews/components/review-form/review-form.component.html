@@ -1,0 +1,94 @@
+<div class="container">
+  <div class="loading-error" *ngIf="loading$ | async">
+    <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
+  </div>
+
+  <div class="error-message" *ngIf="error$ | async as error">
+    <p>{{error}}</p>
+  </div>
+
+  <form [formGroup]="reviewForm" (ngSubmit)="onSubmit()" class="review-form">
+    <div class="form-content">
+      <div class="form-fields">
+        <!-- Image Upload -->
+        <div class="image-section">
+          <div class="image-preview" [class.has-image]="imagePreview">
+            <img *ngIf="imagePreview" [src]="imagePreview" alt="Review image preview">
+            <div *ngIf="!imagePreview" class="upload-placeholder">
+              <mat-icon>image</mat-icon>
+              <span>No image selected</span>
+            </div>
+          </div>
+
+          <div class="image-actions">
+            <button type="button" mat-stroked-button (click)="fileInput.click()">
+              <mat-icon>upload</mat-icon>
+              {{imagePreview ? 'Change Image' : 'Upload Image'}}
+            </button>
+            <button type="button" mat-stroked-button color="warn" *ngIf="imagePreview" (click)="removeImage()">
+              <mat-icon>delete</mat-icon>
+              Remove Image
+            </button>
+          </div>
+          <input #fileInput type="file" (change)="onFileSelected($event)" accept="image/*" style="display: none">
+        </div>
+
+        <!-- Rating -->
+        <mat-form-field appearance="outline">
+          <mat-label>Rating</mat-label>
+          <input matInput type="number" formControlName="rating" min="1" max="5" step="1">
+          <mat-error *ngIf="reviewForm.get('rating')?.invalid && reviewForm.get('rating')?.touched">
+            {{getErrorMessage('rating')}}
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Comment -->
+        <mat-form-field appearance="outline">
+          <mat-label>Comment</mat-label>
+          <textarea matInput formControlName="comment" rows="4"></textarea>
+          <mat-error *ngIf="reviewForm.get('comment')?.invalid && reviewForm.get('comment')?.touched">
+            {{getErrorMessage('comment')}}
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Location -->
+        <mat-form-field appearance="outline">
+          <mat-label>Location</mat-label>
+          <input matInput formControlName="locationName" readonly>
+          <mat-error *ngIf="reviewForm.get('locationName')?.invalid && reviewForm.get('locationName')?.touched">
+            {{getErrorMessage('locationName')}}
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Location Privacy -->
+        <div class="location-privacy">
+          <mat-checkbox formControlName="isPublic">Make location public</mat-checkbox>
+        </div>
+      </div>
+
+      <!-- Map -->
+      <div class="map-container">
+        <google-map
+          height="400px"
+          width="100%"
+          [center]="center"
+          [zoom]="zoom"
+          [options]="mapOptions"
+          (mapClick)="onMapClick($event)">
+          <map-marker
+            *ngIf="markerPosition"
+            [position]="markerPosition"
+            [options]="{ draggable: true }">
+          </map-marker>
+        </google-map>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" mat-button routerLink="../">Cancel</button>
+      <button type="submit" mat-raised-button color="primary" [disabled]="reviewForm.invalid || !markerPosition || (loading$ | async)">
+        Submit Review
+      </button>
+    </div>
+  </form>
+</div> 

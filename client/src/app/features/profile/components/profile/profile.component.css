@@ -1,0 +1,33 @@
+.profile-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+mat-card {
+  width: 100%;
+  max-width: 600px;
+}
+
+.profile-info {
+  margin: 2rem 0;
+}
+
+.profile-info p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+button {
+  flex: 1;
+}
+
+mat-icon {
+  margin-right: 0.5rem;
+} 

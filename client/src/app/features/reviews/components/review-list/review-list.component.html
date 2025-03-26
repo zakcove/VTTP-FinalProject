@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="loading-spinner" *ngIf="loading$ | async">
+    <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
+  </div>
+
+  <div class="error-message" *ngIf="error$ | async as error">
+    <p>{{error}}</p>
+  </div>
+
+  <div class="reviews-header">
+    <mat-form-field appearance="outline">
+      <mat-label>Sort by</mat-label>
+      <mat-select [value]="currentSort" (selectionChange)="onSortChange($event.value)">
+        <mat-option *ngFor="let option of sortOptions" [value]="option.value">
+          {{option.label}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="reviews-list" *ngIf="reviews$ | async as reviews">
+    <mat-card *ngFor="let review of reviews.content" class="review-card">
+      <mat-card-header>
+        <div mat-card-avatar class="user-avatar">
+          <mat-icon>account_circle</mat-icon>
+        </div>
+        <mat-card-title>
+          <div class="rating">
+            <mat-icon *ngFor="let star of getRatingStars(review.rating)" class="star-icon">star</mat-icon>
+          </div>
+        </mat-card-title>
+        <mat-card-subtitle>{{formatDate(review.createdAt)}}</mat-card-subtitle>
+      </mat-card-header>
+
+      <img *ngIf="review.imageUrl" mat-card-image [src]="review.imageUrl" [alt]="'Review image'">
+
+      <mat-card-content>
+        <p class="review-comment">{{review.comment}}</p>
+        <p *ngIf="review.isPublic && review.locationName" class="review-location">
+          <mat-icon>location_on</mat-icon>
+          {{review.locationName}}
+        </p>
+      </mat-card-content>
+
+      <mat-card-actions *ngIf="isAdmin && !review.isModerated">
+        <button mat-button color="primary" (click)="onModerateReview(review.id, true)">
+          <mat-icon>check</mat-icon>
+          Approve
+        </button>
+        <button mat-button color="warn" (click)="onModerateReview(review.id, false)">
+          <mat-icon>close</mat-icon>
+          Reject
+        </button>
+      </mat-card-actions>
+    </mat-card>
+
+    <div *ngIf="reviews.content.length === 0" class="no-reviews">
+      <p>No reviews yet</p>
+    </div>
+  </div>
+
+  <mat-paginator
+    *ngIf="(reviews$ | async)?.totalElements"
+    [length]="(reviews$ | async)?.totalElements"
+    [pageSize]="pageSize"
+    [pageIndex]="currentPage"
+    [pageSizeOptions]="[5, 10, 25, 50]"
+    (page)="onPageChange($event)">
+  </mat-paginator>
+</div> 

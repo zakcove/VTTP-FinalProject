@@ -1,0 +1,168 @@
+.mat-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 0 1.5rem;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all var(--transition-speed);
+}
+
+.mat-toolbar.scrolled {
+  background: rgba(255, 255, 255, 0.98) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 56px;
+}
+
+.brand {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  color: var(--primary-color);
+  cursor: pointer;
+  text-decoration: none;
+  transition: color var(--transition-speed);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brand:hover {
+  color: var(--accent-color);
+}
+
+.brand .mat-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  margin-right: 0;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-button {
+  height: 36px;
+  margin: 0 4px;
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  transition: all var(--transition-speed) !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.nav-button .mat-icon {
+  margin: 0 !important;
+}
+
+.nav-button:hover {
+  background-color: rgba(33, 150, 243, 0.1) !important;
+  transform: translateY(-1px);
+}
+
+.user-menu-button {
+  width: 40px;
+  height: 40px;
+  margin: 0 4px;
+  border-radius: 20px !important;
+  transition: all var(--transition-speed);
+}
+
+.user-menu-button:hover {
+  background-color: rgba(33, 150, 243, 0.1);
+  transform: scale(1.05);
+}
+
+::ng-deep .user-menu {
+  border-radius: 12px !important;
+  margin-top: 8px !important;
+  min-width: 200px !important;
+  overflow: hidden !important;
+}
+
+::ng-deep .menu-header {
+  padding: 16px;
+  background-color: var(--primary-color);
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+::ng-deep .menu-header .mat-icon {
+  margin: 0;
+}
+
+::ng-deep .mat-menu-item {
+  height: 48px !important;
+  line-height: 48px !important;
+  font-weight: 500 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+::ng-deep .mat-menu-item .mat-icon {
+  margin: 0 !important;
+}
+
+::ng-deep .logout-button {
+  color: #dc3545 !important;
+}
+
+::ng-deep .logout-button .mat-icon {
+  color: #dc3545 !important;
+}
+
+.main-content {
+  padding: 80px 1.5rem 1.5rem;
+  min-height: calc(100vh - 64px);
+  background-color: var(--background-color);
+  transition: padding var(--transition-speed);
+}
+
+.scrolled + .main-content {
+  padding-top: 72px;
+}
+
+@media (max-width: 600px) {
+  .mat-toolbar {
+    padding: 0 1rem;
+  }
+
+  .brand {
+    font-size: 1.25rem;
+  }
+
+  .nav-button {
+    padding: 0 8px !important;
+  }
+
+  .nav-button span {
+    display: none;
+  }
+
+  .nav-button .mat-icon {
+    margin: 0 !important;
+  }
+
+  .main-content {
+    padding: 72px 1rem 1rem;
+  }
+
+  .scrolled + .main-content {
+    padding-top: 64px;
+  }
+}

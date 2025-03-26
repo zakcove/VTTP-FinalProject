@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="filters">
+    <mat-form-field appearance="outline">
+      <mat-label>Search snacks</mat-label>
+      <input matInput [(ngModel)]="searchQuery" (keyup.enter)="onSearch()" placeholder="Search by name or description">
+      <button *ngIf="searchQuery" matSuffix mat-icon-button (click)="clearSearch()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Category</mat-label>
+      <mat-select [(ngModel)]="selectedCategory" (selectionChange)="onCategoryChange()">
+        <mat-option value="">All Categories</mat-option>
+        <mat-option *ngFor="let category of categories" [value]="category">
+          {{category}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="loading-error" *ngIf="loading$ | async">
+    <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
+  </div>
+
+  <div class="error-message" *ngIf="error$ | async as error">
+    <p>{{error}}</p>
+  </div>
+
+  <div class="snacks-grid" *ngIf="snacks$ | async as snacks">
+    <mat-card *ngFor="let snack of snacks" class="snack-card" [routerLink]="['/snacks', snack.id]">
+      <img mat-card-image [src]="snack.imageUrl || 'assets/images/placeholder.png'" [alt]="snack.name">
+      <mat-card-content>
+        <h3>{{snack.name}}</h3>
+        <p class="brand">{{snack.brand}}</p>
+        <p class="description">{{snack.description}}</p>
+        <div class="price-rating">
+          <span class="price">${{snack.price.toFixed(2)}}</span>
+          <span class="rating" *ngIf="snack.averageRating">
+            <mat-icon>star</mat-icon>
+            {{snack.averageRating.toFixed(1)}}
+            ({{snack.totalReviews}})
+          </span>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary" [routerLink]="['/snacks', snack.id, 'edit']">
+          <mat-icon>edit</mat-icon> Edit
+        </button>
+        <button mat-button color="warn" (click)="deleteSnack(snack.id!, $event)">
+          <mat-icon>delete</mat-icon> Delete
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <div class="no-results" *ngIf="(snacks$ | async)?.length === 0">
+    <p>No snacks found.</p>
+  </div>
+
+  <mat-paginator
+    *ngIf="pagination$ | async as pagination"
+    [length]="pagination.totalElements"
+    [pageSize]="pagination.pageSize"
+    [pageIndex]="pagination.currentPage"
+    [pageSizeOptions]="[5, 10, 25, 50]"
+    (page)="onPageChange($event)">
+  </mat-paginator>
+
+  <button mat-fab color="primary" class="add-button" [routerLink]="['/snacks/new']">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

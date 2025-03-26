@@ -1,0 +1,33 @@
+<div class="container" *ngIf="stats$ | async as stats">
+  <mat-card class="stats-card">
+    <mat-card-content>
+      <div class="stats-header">
+        <div class="average-rating">
+          <div class="rating-number">{{stats.averageRating | number:'1.1-1'}}</div>
+          <div class="rating-stars">
+            <mat-icon *ngFor="let star of getRatingStars(roundRating(stats.averageRating))" class="star-icon">star</mat-icon>
+          </div>
+          <div class="total-reviews">{{stats.totalReviews}} reviews</div>
+        </div>
+      </div>
+
+      <div class="rating-distribution">
+        <div *ngFor="let rating of ratingLevels" class="rating-bar">
+          <div class="rating-label">
+            <span>{{rating}}</span>
+            <mat-icon class="star-icon">star</mat-icon>
+          </div>
+          <div class="progress-container">
+            <mat-progress-bar
+              mode="determinate"
+              [value]="getPercentage(stats.ratingDistribution[rating] || 0, stats.totalReviews)">
+            </mat-progress-bar>
+          </div>
+          <div class="rating-count">
+            {{stats.ratingDistribution[rating] || 0}}
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div> 

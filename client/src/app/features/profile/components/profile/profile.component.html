@@ -1,0 +1,25 @@
+<div class="profile-container">
+  <mat-card *ngIf="user$ | async as user">
+    <mat-card-header>
+      <mat-card-title>Profile</mat-card-title>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <div class="profile-info">
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+      </div>
+
+      <div class="actions">
+        <button mat-raised-button color="primary" (click)="viewMyReviews()">
+          <mat-icon>rate_review</mat-icon>
+          My Reviews
+        </button>
+        <button mat-raised-button color="accent" (click)="createReview()">
+          <mat-icon>add</mat-icon>
+          Create Review
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div> 

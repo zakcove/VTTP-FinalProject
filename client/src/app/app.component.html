@@ -1,0 +1,63 @@
+<mat-toolbar [class.scrolled]="isScrolled">
+  <span class="brand" routerLink="/">
+    <mat-icon>local_dining</mat-icon>
+    Snacked
+  </span>
+  <span class="spacer"></span>
+  
+  <ng-container *ngIf="isLoggedIn$ | async">
+    <div [@fadeInOut] class="nav-buttons">
+      <button mat-button routerLink="/snacks" class="nav-button">
+        <mat-icon>restaurant_menu</mat-icon>
+        <span>Explore Snacks</span>
+      </button>
+      
+      <button mat-button routerLink="/reviews/create" class="nav-button">
+        <mat-icon>rate_review</mat-icon>
+        <span>Write Review</span>
+      </button>
+      
+      <button mat-icon-button [matMenuTriggerFor]="userMenu" class="user-menu-button">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+      
+      <mat-menu #userMenu="matMenu" class="user-menu">
+        <div class="menu-header">
+          <mat-icon>account_circle</mat-icon>
+          <span>My Account</span>
+        </div>
+        <mat-divider></mat-divider>
+        <button mat-menu-item routerLink="/profile">
+          <mat-icon>person</mat-icon>
+          <span>Profile</span>
+        </button>
+        <button mat-menu-item routerLink="/reviews/my-reviews">
+          <mat-icon>rate_review</mat-icon>
+          <span>My Reviews</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="logout()" class="logout-button">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!(isLoggedIn$ | async)">
+    <div [@fadeInOut] class="nav-buttons">
+      <button mat-button routerLink="/auth/login" class="nav-button">
+        <mat-icon>login</mat-icon>
+        <span>Login</span>
+      </button>
+      <button mat-raised-button color="primary" routerLink="/auth/register" class="nav-button">
+        <mat-icon>person_add</mat-icon>
+        <span>Register</span>
+      </button>
+    </div>
+  </ng-container>
+</mat-toolbar>
+
+<div class="main-content">
+  <router-outlet></router-outlet>
+</div>

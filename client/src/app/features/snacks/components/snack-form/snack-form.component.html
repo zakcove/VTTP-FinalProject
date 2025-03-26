@@ -1,0 +1,97 @@
+<div class="container">
+  <div class="back-button">
+    <button mat-button color="primary" routerLink="/snacks">
+      <mat-icon>arrow_back</mat-icon> Back to Snacks
+    </button>
+  </div>
+
+  <h1>{{isEditMode ? 'Edit' : 'Add'}} Snack</h1>
+
+  <div class="loading-error" *ngIf="loading$ | async">
+    <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
+  </div>
+
+  <div class="error-message" *ngIf="error$ | async as error">
+    <p>{{error}}</p>
+  </div>
+
+  <form [formGroup]="snackForm" (ngSubmit)="onSubmit()" class="snack-form">
+    <div class="form-content">
+      <div class="form-fields">
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" placeholder="Enter snack name">
+          <mat-error *ngIf="snackForm.get('name')?.invalid && snackForm.get('name')?.touched">
+            {{getErrorMessage('name')}}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Brand</mat-label>
+          <input matInput formControlName="brand" placeholder="Enter brand name">
+          <mat-error *ngIf="snackForm.get('brand')?.invalid && snackForm.get('brand')?.touched">
+            {{getErrorMessage('brand')}}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Category</mat-label>
+          <mat-select formControlName="category">
+            <mat-option *ngFor="let category of categories" [value]="category">
+              {{category}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="snackForm.get('category')?.invalid && snackForm.get('category')?.touched">
+            {{getErrorMessage('category')}}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Price</mat-label>
+          <input matInput type="number" formControlName="price" placeholder="0.00" min="0.01" step="0.01">
+          <span matPrefix>$&nbsp;</span>
+          <mat-error *ngIf="snackForm.get('price')?.invalid && snackForm.get('price')?.touched">
+            {{getErrorMessage('price')}}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description" rows="4" placeholder="Enter snack description"></textarea>
+          <mat-error *ngIf="snackForm.get('description')?.invalid && snackForm.get('description')?.touched">
+            {{getErrorMessage('description')}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="image-section">
+        <div class="image-preview" [class.has-image]="imagePreview">
+          <img *ngIf="imagePreview" [src]="imagePreview" alt="Snack preview">
+          <div *ngIf="!imagePreview" class="upload-placeholder">
+            <mat-icon>image</mat-icon>
+            <span>No image selected</span>
+          </div>
+        </div>
+
+        <div class="image-actions">
+          <button type="button" mat-stroked-button (click)="fileInput.click()">
+            <mat-icon>upload</mat-icon>
+            {{imagePreview ? 'Change Image' : 'Upload Image'}}
+          </button>
+          <button type="button" mat-stroked-button color="warn" *ngIf="imagePreview" (click)="removeImage()">
+            <mat-icon>delete</mat-icon>
+            Remove Image
+          </button>
+        </div>
+        <input #fileInput type="file" (change)="onFileSelected($event)" accept="image/*" style="display: none">
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" mat-button routerLink="/snacks">Cancel</button>
+      <button type="submit" mat-raised-button color="primary" [disabled]="snackForm.invalid || (loading$ | async)">
+        {{isEditMode ? 'Update' : 'Create'}} Snack
+      </button>
+    </div>
+  </form>
+</div> 

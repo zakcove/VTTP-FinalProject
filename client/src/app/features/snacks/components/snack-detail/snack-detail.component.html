@@ -1,0 +1,81 @@
+<div class="container">
+  <div class="loading-error" *ngIf="loading$ | async">
+    <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
+  </div>
+
+  <div class="error-message" *ngIf="error$ | async as error">
+    <p>{{error}}</p>
+  </div>
+
+  <div class="snack-detail" *ngIf="snack$ | async as snack">
+    <div class="back-button">
+      <button mat-button color="primary" routerLink="/snacks">
+        <mat-icon>arrow_back</mat-icon> Back to Snacks
+      </button>
+    </div>
+
+    <mat-card>
+      <div class="snack-content">
+        <div class="snack-image">
+          <img [src]="snack.imageUrl || 'assets/images/placeholder.png'" [alt]="snack.name">
+        </div>
+
+        <div class="snack-info">
+          <h1>{{snack.name}}</h1>
+          <p class="brand">{{snack.brand}}</p>
+          <p class="category">Category: {{snack.category}}</p>
+          
+          <div class="price-rating">
+            <span class="price">${{snack.price.toFixed(2)}}</span>
+            <span class="rating" *ngIf="snack.averageRating">
+              <mat-icon>star</mat-icon>
+              {{snack.averageRating.toFixed(1)}}
+              ({{snack.totalReviews}} reviews)
+            </span>
+          </div>
+
+          <mat-divider></mat-divider>
+
+          <div class="description">
+            <h3>Description</h3>
+            <p>{{snack.description}}</p>
+          </div>
+
+          <mat-divider></mat-divider>
+
+          <div class="metadata">
+            <p>Added: {{snack.createdAt | date:'medium'}}</p>
+            <p>Last updated: {{snack.updatedAt | date:'medium'}}</p>
+          </div>
+
+          <div class="actions" *ngIf="isAdmin$ | async">
+            <button mat-raised-button color="primary" [routerLink]="['/snacks', snack.id, 'edit']">
+              <mat-icon>edit</mat-icon> Edit
+            </button>
+            <button mat-raised-button color="warn" (click)="onDelete(snack.id!)">
+              <mat-icon>delete</mat-icon> Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+
+    <div class="reviews-section">
+      <div class="reviews-header">
+        <h2>Reviews</h2>
+        <button mat-raised-button color="primary" [routerLink]="['/snacks', snack.id, 'reviews', 'new']">
+          <mat-icon>rate_review</mat-icon>
+          Write a Review
+        </button>
+      </div>
+      <div class="reviews-content">
+        <div class="reviews-stats">
+          <app-rating-stats [snackId]="snack.id!"></app-rating-stats>
+        </div>
+        <div class="reviews-list">
+          <app-review-list [snackId]="snack.id!" [isAdmin]="isAdmin$ | async"></app-review-list>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

@@ -1,0 +1,155 @@
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.back-button {
+  margin-bottom: 20px;
+}
+
+.snack-content {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 32px;
+}
+
+@media (max-width: 768px) {
+  .snack-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+.snack-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.snack-info {
+  padding: 16px;
+}
+
+h1 {
+  margin: 0 0 8px 0;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.brand {
+  color: #666;
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.category {
+  color: #333;
+  margin-bottom: 16px;
+}
+
+.price-rating {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 16px 0;
+}
+
+.price {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #2e7d32;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #f57c00;
+  font-size: 1.1rem;
+}
+
+.rating mat-icon {
+  font-size: 20px;
+  height: 20px;
+  width: 20px;
+}
+
+.description {
+  margin: 24px 0;
+}
+
+.description h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.description p {
+  color: #333;
+  line-height: 1.6;
+}
+
+.metadata {
+  margin: 24px 0;
+  color: #666;
+}
+
+.metadata p {
+  margin: 4px 0;
+}
+
+.actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.loading-error {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+.error-message {
+  color: #f44336;
+  text-align: center;
+  padding: 20px;
+}
+
+.reviews-section {
+  margin-top: 40px;
+}
+
+.reviews-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.reviews-header h2 {
+  font-size: 1.8rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.reviews-content {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 32px;
+}
+
+@media (max-width: 1024px) {
+  .reviews-content {
+    grid-template-columns: 1fr;
+  }
+
+  .reviews-stats {
+    order: 2;
+  }
+
+  .reviews-list {
+    order: 1;
+  }
+} 
